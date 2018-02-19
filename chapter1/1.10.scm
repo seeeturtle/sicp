@@ -11,7 +11,3 @@
 ( A 2 4 )
 ; result: 65536
 ( A 3 3 )
-
-; ( f n ) computes 2 * n
-; ( g n ) computes 2 ^ n
-; ( h n ) computes 2 ^ (2n - 2)
