@@ -1,0 +1,29 @@
+* 오래 걸리는 Queen
+** 문제
+   #+begin_src scheme 
+     ;; original
+     (flatmap
+      (lambda (rest-of-queens)
+        (map (lambda (new-row)
+               (adjoin-position new-row k rest-of-queens))
+             (enumerate-interval 1 board-size)))
+      (queen-cols (- k 1)))
+
+     ;; Louis' flatmap
+     (flatmap
+      (lambda (new-row)
+        (map (lambda (rest-of-queens)
+               (adjoin-position new-row k rest-of-queens))
+             (queen-cols (- k 1))))
+      (enumerate-interval 1 board-size))
+   #+end_src
+   왜 Louis의 프로시저가 훨씬 더 오래걸리는 걸까?
+** 이유
+   original은 queen-cols를 한번에 딱 한번 밖에 호출하지 않는다.
+   하지만 louis의 것 같은 경우에 보면 *board-size* 만큼 호출한다.
+   따라서 다른 시간들을 무시한다면 어떤 한 단계에서 Louis 의 것이 걸리는 시간은
+   원래의 것에 *board-size* 를 곱한 만큼이라고 생각할 수 있다.
+   그러므로 다음단계로 갈수록 계속 곱해지므로 louis의 것이 걸리는 시간은
+   다음과 같다고 생각할 수 있다.
+   T * b(oard-size) * b * ...
+   즉 eight-queens 퍼즐을 푸는데에는 8^8 * T 만큼 걸린다.
